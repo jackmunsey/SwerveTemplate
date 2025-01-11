@@ -39,6 +39,7 @@ public class RobotContainer {
   public RobotContainer() {
     SparkMax backLeftDriveMotor = new SparkMax(mBackLeftDriveConfig.getDriveId(), mBackLeftDriveConfig.getDriveMotorType());
     SparkMax backLeftTurnMotor = new SparkMax(mBackLeftDriveConfig.getTurnId(), mBackLeftDriveConfig.getTurnMotorType());
+    
     AbsoluteEncoder backLeftTurnEncoder = backLeftTurnMotor.getAbsoluteEncoder();
     backLeftDriveMotor.configure(mBackLeftDriveConfig.getDriveCondfig(), ResetMode.kResetSafeParameters, PersistMode.kPersistParameters);
     backLeftTurnMotor.configure(mBackLeftDriveConfig.getTurnConfig(), ResetMode.kResetSafeParameters, PersistMode.kPersistParameters);
