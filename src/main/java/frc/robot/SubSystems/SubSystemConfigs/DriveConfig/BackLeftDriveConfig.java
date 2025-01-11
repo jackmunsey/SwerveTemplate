@@ -14,6 +14,11 @@ public class BackLeftDriveConfig {
     private IdleMode turnIdle = IdleMode.kBrake;
     private boolean turnInverted = true;
     private SparkMaxConfig turnConfig = new SparkMaxConfig();
+
+    private int P = 1;
+    private int I = 1;
+    private int D = 1;
+    private FeedbackSensor turnFeedBackSensor = FeedbackSensor.kPrimaryEncoder;
     
     private int driveId = 1;
     private int driveCurrentLimit = 1;
@@ -73,6 +78,7 @@ public class BackLeftDriveConfig {
 
     public SparkMaxConfig getTurnConfig() {
         turnConfig.inverted(turnInverted).idleMode(turnIdle);
+        turnConfig.closedLoop.feedbackSensor(turnFeedBackSensor).pid(P, I, D);
         return turnConfig;
     }
 

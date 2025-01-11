@@ -8,23 +8,31 @@ import com.revrobotics.AbsoluteEncoder;
 import com.revrobotics.spark.SparkClosedLoopController;
 import com.revrobotics.spark.SparkMax;
 
+import edu.wpi.first.math.kinematics.SwerveModuleState;
 import edu.wpi.first.wpilibj2.command.SubsystemBase;
 
 public class SwerveModule extends SubsystemBase {
-  private SparkMax mDrive;
-  private SparkMax mTurn;
+  private SwerveModuleState desiredState;
+  private SparkMax mDriveMotor;
+  private SparkMax mTurnMotor;
+  private SparkClosedLoopController mTurnController;
   private AbsoluteEncoder mTurnEncoder;
-  private SparkClosedLoopController mPID;
   
 
   /** Creates a new SwerveModule. */
-  public SwerveModule(SparkMax drive, SparkMax turn, AbsoluteEncoder turnEncoder) {
-    this.mDrive = drive;
-
-    this.mTurn = turn;
+  public SwerveModule(SparkMax driveMotor, SparkMax turnMotor, SparkClosedLoopController turnController, AbsoluteEncoder turnEncoder) {
+    this.mDriveMotor = driveMotor;
+    this.mTurnMotor = turnMotor;
     this.mTurnEncoder = turnEncoder;
-    this.mPID = mTurn.getClosedLoopController();
   }
+
+  public void setSwerveModuleStates(SwerveModuleState desiredState) {
+    this.desiredState = desiredState;
+  }
+  //use rev pids to set desired state to the actual state
+
+
+
 
   @Override
   public void periodic() {

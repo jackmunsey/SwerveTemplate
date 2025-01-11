@@ -14,24 +14,19 @@ import frc.robot.SubSystems.SubSystemConfigs.DriveConfig.DriveConfig;
 
 public class Drive extends SubsystemBase {
   private DriveConfig mConfig;
+  private SwerveModule[] mSwerveModules;
   Translation2d m_backRightLocation;
   Translation2d m_backLeftLocation;
   Translation2d m_frontLeftLocation;
   Translation2d m_frontRightLocation;
   ChassisSpeeds speeds;
+  SwerveDriveKinematics m_kinematics;
   SwerveModuleState[] moduleStates;
-// Front left module state
-SwerveModuleState frontLeft = moduleStates[0];
-// Front right module state
-SwerveModuleState frontRight = moduleStates[1];
-// Back left module state
-SwerveModuleState backLeft = moduleStates[2];
-// Back right module state
-SwerveModuleState backRight = moduleStates[3];
 
   /** Creates a new Drive. */
-  public Drive(DriveConfig mConfig) {
-    this.mConfig = mConfig;
+  public Drive(DriveConfig config, SwerveModule[] swerveModules) {
+    this.mConfig = config;
+    this.mSwerveModules = swerveModules;
 
     speeds = new ChassisSpeeds(0, 0, 0);
 
@@ -40,14 +35,12 @@ SwerveModuleState backRight = moduleStates[3];
     m_frontLeftLocation = new Translation2d(mConfig.getFrontLeftPosition(0), mConfig.getFrontLeftPosition(1));
     m_frontRightLocation = new Translation2d(mConfig.getFrontRightPosition(0), mConfig.getFrontRightPosition(1));
 
-    SwerveDriveKinematics m_kinematics = new SwerveDriveKinematics(
+    m_kinematics = new SwerveDriveKinematics(
       m_backLeftLocation, m_backRightLocation, m_frontLeftLocation, m_frontRightLocation);
-    
-    //moduleStates = kinematics.toSwerveModuleStates(speeds);
 
-      
-      
+    speeds = new ChassisSpeeds(1.0, 3.0, 1.5);
 
+    moduleStates = m_kinematics.toSwerveModuleStates(speeds);
 
   }
 
@@ -55,6 +48,12 @@ SwerveModuleState backRight = moduleStates[3];
     speeds.omegaRadiansPerSecond = rot;
     speeds.vxMetersPerSecond = fwd;
     speeds.vyMetersPerSecond = str;
+  }
+
+  public
+
+  public SwerveModuleState[] getSwerveModuleStates() {
+    return moduleStates;
   }
 
 
